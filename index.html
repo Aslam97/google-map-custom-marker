@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Google Map</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://rawgit.com/filipelinhares/ress/master/dist/ress.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- defined autocomplete input -->
+                <div id="pac-card">
+                    <input id="pac-input" type="text" placeholder="Enter a location">
+                </div>
+
+                <div class="map-content">
+                    <div class="address-map-container">
+                        <div id="map" style="width: 100%; height: 100%;">
+                        </div>
+                    </div>
+
+                    <button id="btn-map" type="button">Gunakan
+                        Lokasi
+                        Ini</button>
+                    <img class="pin-map" src="images/pin_poin_toped.png" alt="pin map">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name" class="title"></span><br>
+        <span id="place-address"></span>
+    </div>
+
+    <script>
+        var geocoder;
+        var map;
+
+        function initMap() {
+
+            geocoder = new google.maps.Geocoder();
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: -6.914744,
+                    lng: 107.609810
+                },
+                zoom: 13,
+                fullscreenControl: false,
+                mapTypeControl: false,
+                streetViewControl: false
+            });
+
+            var card = document.getElementById('pac-card');
+            var input = document.getElementById('pac-input');
+
+            var node = document.createElement('div')
+            node.className = 'centerMarker'
+
+            var mapNode = map.getDiv()
+            mapNode.append(node)
+
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+
+            var autocomplete = new google.maps.places.Autocomplete(input);
+
+            // Bind the map's bounds (viewport) property to the autocomplete object,
+            // so that the autocomplete requests use the current map bounds for the
+            // bounds option in the request.
+            autocomplete.bindTo('bounds', map);
+
+            // Set the data fields to return when the user selects a place.
+            autocomplete.setFields(['address_components', 'geometry', 'name']);
+
+            var marker = new google.maps.Marker({
+                map: map,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+
+            autocomplete.addListener('place_changed', function () {
+
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                }
+
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17); // Why 17? Because it looks good.
+                }
+
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+
+                console.log('[autocomplete event]', place.name, address)
+            });
+
+            map.addListener('center_changed', function () {
+
+                geocoder.geocode({
+                    latLng: map.getCenter()
+                }, function (results, status) {
+                    if (status == 'OK') {
+                        console.log('[center_changed]', results[0].formatted_address)
+                    }
+                });
+
+            });
+
+            var btnMap = document.getElementById('btn-map')
+            btnMap.addEventListener('click', function() {
+                geocoder.geocode({
+                    latLng: map.getCenter()
+                }, function (results, status) {
+                    if (status == 'OK') {
+                        console.log('[clicked event]', results[0].formatted_address)
+                    }
+                });
+            })
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap"
+        async defer></script>
+</body>
+
+</html>

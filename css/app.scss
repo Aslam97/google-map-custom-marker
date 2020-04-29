@@ -1,0 +1,122 @@
+body {
+    font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: left;
+    background-color: #f5f7fb;
+}
+
+.container {
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 100vh;
+    margin: 0 auto;
+    color: #1c1c1c;
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+        color: rgba(0, 0, 0, .87);
+
+        &.shadow-sm {
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12) !important;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            margin: 0;
+            position: relative;
+        }
+    }
+}
+
+.map-content {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    #btn-map {
+        font-size: 14px;
+        padding: 0;
+        position: absolute;
+        top: 32%;
+        left: 50%;
+        width: 158px;
+        height: 30px;
+        text-align: center;
+        background: #60bb55;
+        color: white;
+        display: block;
+        font-weight: 500;
+        border-bottom: 2px solid #0b8040;
+        border-radius: 4px;
+        cursor: pointer;
+        outline: 0;
+        z-index: 3050;
+        line-height: 22px;
+        transform: translateX(-50%) translateY(-50%);
+
+        &:before {
+            content: "\A";
+            border-color: rgb(96, 187, 85) transparent;
+            border-style: solid;
+            border-width: 0 10px 10px;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+            transition: 0.2s linear;
+        }
+    }
+
+    .pin-map {
+        color: #fc4848;
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .address-map-container {
+        width: 100%;
+        height: 400px;
+
+        .centerMarker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            margin-left: -10px;
+            margin-top: -34px;
+            height: 34px;
+            width: 20px;
+            cursor: pointer;
+        }
+    }
+}
+
+#pac-input {
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    font-size: 15px;
+    border-radius: 2px;
+    border: 0;
+    margin: 10px;
+    width: 290px;
+    left: 0 !important;
+    height: 40px;
+    text-overflow: ellipsis;
+    padding: 0 1em;
+    background: #fff;
+    outline: 0;
+}
