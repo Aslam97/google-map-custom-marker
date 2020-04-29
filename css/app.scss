@@ -63,7 +63,6 @@ body {
         border-radius: 4px;
         cursor: pointer;
         outline: 0;
-        z-index: 3050;
         line-height: 22px;
         transform: translateX(-50%) translateY(-50%);
 
@@ -119,4 +118,21 @@ body {
     padding: 0 1em;
     background: #fff;
     outline: 0;
+}
+
+.pac-container {
+    background-color: #fff;
+    display: inline-block;
+
+    &:after {
+        background-image: none !important;
+        padding: 0;
+        height: 0
+    }
+}
+
+.pac-container {
+    z-index: 1050;
+    position: fixed;
+    float: left
 }
