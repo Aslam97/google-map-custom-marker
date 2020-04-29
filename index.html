@@ -43,12 +43,6 @@
         </div>
     </div>
 
-    <div id="infowindow-content">
-        <img src="" width="16" height="16" id="place-icon">
-        <span id="place-name" class="title"></span><br>
-        <span id="place-address"></span>
-    </div>
-
     <script>
         var geocoder;
         var map;
@@ -87,11 +81,6 @@
 
             // Set the data fields to return when the user selects a place.
             autocomplete.setFields(['address_components', 'geometry', 'name']);
-
-            var marker = new google.maps.Marker({
-                map: map,
-                anchorPoint: new google.maps.Point(0, -29)
-            });
 
             autocomplete.addListener('place_changed', function () {
 
@@ -136,6 +125,7 @@
             });
 
             var btnMap = document.getElementById('btn-map')
+            
             btnMap.addEventListener('click', function() {
                 geocoder.geocode({
                     latLng: map.getCenter()
